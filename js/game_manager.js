@@ -6,7 +6,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
 
   this.startTiles   = 2;
 
-  this.inputManager.on("move", this.move.bind(this));
+//  this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
@@ -161,6 +161,8 @@ GameManager.prototype.move = function (direction) {
 
     this.actuate();
   }
+
+    return moved;
 };
 
 // Get the vector representing the chosen direction
