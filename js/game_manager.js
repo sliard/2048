@@ -1,30 +1,42 @@
 // 0: up, 1: right, 2:down, 3: left
-var lastMove = 3;
-var timer = 100;
+var MOVE_UP = 0;
+var MOVE_RIGHT = 1;
+var MOVE_DOWN = 2;
+var MOVE_LEFT = 3;
+
+var nextMove = MOVE_LEFT;
+var timer = 200;
 var gm;
 
 function autoPlay()
 {
-    nextMove = (lastMove == 3) ? 2 : 3;
-    if(gm.move(lastMove)) {
-        lastMove = nextMove;
+    afterMove = (nextMove == MOVE_LEFT) ? MOVE_DOWN : MOVE_LEFT;
+    if(gm.move(nextMove)) {
+        nextMove = afterMove;
         setTimeout(autoPlay,timer);
-    } else if (gm.move(nextMove)){
+    } else if (gm.move(afterMove)){
         setTimeout(autoPlay,timer);
-    } else if(gm.move(1)) {
+    } else if(gm.move(MOVE_RIGHT)) {
 
-        bottomLeft = gm.grid.cellContent({ x: 0, y: 3 });
+        // a b c d
+        // e f g h
+        // i j k l
+        // m n o p
+
         a = gm.grid.cellContent({ x: 0, y: 0 });
-        b = gm.grid.cellContent({ x: 0, y: 1 });
-        c = gm.grid.cellContent({ x: 0, y: 2 });
+        e = gm.grid.cellContent({ x: 0, y: 1 });
+        i = gm.grid.cellContent({ x: 0, y: 2 });
+        m = gm.grid.cellContent({ x: 0, y: 3 });
 
-        if (bottomLeft || (!a && !b && !c)) {
-            gm.move(2);
+        if(m || (!a && !e && !i)) {
+            gm.move(MOVE_DOWN);
         }
-        gm.move(3)
 
+        gm.move(MOVE_LEFT);
+        nextMove = MOVE_DOWN;
         setTimeout(autoPlay,timer);
-    } else if(gm.move(0) || gm.move(2)) {
+    } else if(gm.move(MOVE_UP) || gm.move(MOVE_DOWN)) {
+        nextMove = MOVE_LEFT;
         setTimeout(autoPlay,timer);
     }
 
@@ -54,8 +66,7 @@ GameManager.prototype.restart = function () {
   this.actuator.continue();
   this.setup();
 
-  lastMove = 3;
-  timer = 100;
+  nextMove = MOVE_LEFT;
   setTimeout(autoPlay,timer);
 };
 
