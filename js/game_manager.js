@@ -1,3 +1,37 @@
+// 0: up, 1: right, 2:down, 3: left
+var lastMove = 3;
+var timer = 100;
+var gm;
+
+function autoPlay()
+{
+    nextMove = (lastMove == 3) ? 2 : 3;
+    if(gm.move(lastMove)) {
+        lastMove = nextMove;
+        setTimeout(autoPlay,timer);
+    } else if (gm.move(nextMove)){
+        setTimeout(autoPlay,timer);
+    } else if(gm.move(1)) {
+
+        bottomLeft = gm.grid.cellContent({ x: 0, y: 3 });
+        a = gm.grid.cellContent({ x: 0, y: 0 });
+        b = gm.grid.cellContent({ x: 0, y: 1 });
+        c = gm.grid.cellContent({ x: 0, y: 2 });
+
+        if (bottomLeft || (!a && !b && !c)) {
+            gm.move(2);
+        }
+        gm.move(3)
+
+        setTimeout(autoPlay,timer);
+    } else if(gm.move(0) || gm.move(2)) {
+        setTimeout(autoPlay,timer);
+    }
+
+}
+
+
+
 function GameManager(size, InputManager, Actuator, ScoreManager) {
   this.size         = size; // Size of the grid
   this.inputManager = new InputManager;
@@ -6,17 +40,23 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
 
   this.startTiles   = 2;
 
-  this.inputManager.on("move", this.move.bind(this));
+//  this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
+  gm = this;
+  setTimeout(autoPlay,timer);
 }
 
 // Restart the game
 GameManager.prototype.restart = function () {
   this.actuator.continue();
   this.setup();
+
+  lastMove = 3;
+  timer = 100;
+  setTimeout(autoPlay,timer);
 };
 
 // Keep playing after winning
@@ -161,6 +201,8 @@ GameManager.prototype.move = function (direction) {
 
     this.actuate();
   }
+
+    return moved;
 };
 
 // Get the vector representing the chosen direction
