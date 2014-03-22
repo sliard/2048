@@ -1,6 +1,7 @@
 // 0: up, 1: right, 2:down, 3: left
 var lastMove = 3;
 var timer = 100;
+var gm;
 
 function autoPlay()
 {
@@ -44,6 +45,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
   this.setup();
+  gm = this;
   setTimeout(autoPlay,timer);
 }
 
