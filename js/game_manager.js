@@ -5,8 +5,9 @@ var MOVE_DOWN = 2;
 var MOVE_LEFT = 3;
 
 var nextMove = MOVE_LEFT;
-var timer = 200;
+var timer = 100;
 var gm;
+var solve_log = false;
 
 function autoPlay()
 {
@@ -45,30 +46,37 @@ function autoPlay()
     if((m && n && (m.value == n.value)) || (n && o && (n.value == o.value)) || (o && p && (o.value == p.value))) {
         gm.move(MOVE_LEFT);
         relaod = true;
-        console.log('Left 3 Egal');
-    }
+        if(solve_log) console.log('Left 3 Egal');
+    } else
+
+    if(line3_full && i && j && k && !l && ((i.value == n.value) || (j.value == o.value) || (k.value == p.value))) {
+        gm.move(MOVE_RIGHT);
+        nextMove = MOVE_DOWN;
+        relaod = true;
+        if(solve_log) console.log('Egal D-B - line 2');
+    } else
 
 // line 3
     if(i && m && (i.value == m.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 3 - A');
+        if(solve_log) console.log('Line 3 - A');
     } else if(m && j && n && (j.value == n.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 3 - B');
+        if(solve_log) console.log('Line 3 - B');
     } else if(m && k && o && (k.value == o.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 3 - C');
+        if(solve_log) console.log('Line 3 - C');
     } else if(m && l && p && (l.value == p.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 3 - D');
+        if(solve_log) console.log('Line 3 - D');
     } else
 
 // line 2
@@ -76,22 +84,22 @@ function autoPlay()
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 2 - A');
+        if(solve_log) console.log('Line 2 - A');
     } else if(m && f && j && (f.value == j.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 2 - B');
+        if(solve_log) console.log('Line 2 - B');
     } else if(m && g && k && (g.value == k.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 2 - C');
+        if(solve_log) console.log('Line 2 - C');
     } else if(m && h && l && (h.value == l.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 2 - D');
+        if(solve_log) console.log('Line 2 - D');
     } else
 
 // line 1
@@ -100,80 +108,73 @@ function autoPlay()
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 1 - A');
+        if(solve_log) console.log('Line 1 - A');
     } else if(m && b && f && (b.value == f.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 1 - B');
+        if(solve_log) console.log('Line 1 - B');
     } else if(m && c && g && (c.value == g.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 1 - C');
+        if(solve_log) console.log('Line 1 - C');
     } else if(m && d && h && (d.value == h.value)) {
         gm.move(MOVE_DOWN);
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Line 1 - D');
+        if(solve_log) console.log('Line 1 - D');
     } else if(line3_full && ((i && j && (i.value == j.value)) || (j && k && (j.value == k.value)) || (k && l && (k.value == l.value)))) {
         gm.move(MOVE_LEFT);
         relaod = true;
-        console.log('Left 2 Egal');
+        if(solve_log) console.log('Left 2 Egal');
     } else if(line2_full && line3_full && ((e && f && (e.value == f.value)) || (f && g && (f.value == g.value)) || (g && h && (g.value == h.value)))) {
         gm.move(MOVE_LEFT);
         relaod = true;
-        console.log('Left 1 Egal');
+        if(solve_log) console.log('Left 1 Egal');
     } else if(line1_full && line2_full && line3_full && ((a && b && (a.value == b.value)) || (b && c && (b.value == c.value)) || (c && d && (c.value == d.value)))) {
         gm.move(MOVE_LEFT);
         relaod = true;
-        console.log('Left 0 Egal');
+        if(solve_log) console.log('Left 0 Egal');
     } else
 
-
-    if(line3_full && i && j && k && !l && ((i.value == n.value) || (j.value == o.value) || (k.value == p.value))) {
-        gm.move(MOVE_RIGHT);
-        nextMove = MOVE_DOWN;
-        relaod = true;
-        console.log('Egal D-B - line 2');
-    } else
 
     if(line3_full && line2_full && e && f && g && !h && ((e.value == j.value) || (f.value == k.value) || (g.value == l.value))) {
         gm.move(MOVE_RIGHT);
         nextMove = MOVE_DOWN;
         relaod = true;
-        console.log('Egal D-B - line 1');
+        if(solve_log) console.log('Egal D-B - line 1');
     } else
 
     if(line3_full && line2_full && line1_full && a && b && c && !d && ((a.value == f.value) || (b.value == g.value) || (c.value == h.value))) {
         gm.move(MOVE_RIGHT);
         nextMove = MOVE_DOWN;
         relaod = true;
-        console.log('Egal D-B - line 0');
+        if(solve_log) console.log('Egal D-B - line 0');
     } else
 
     if(gm.move(nextMove)) {
         nextMove = afterMove;
-        console.log('Go to : '+nextMove);
+        if(solve_log) console.log('Go to : '+nextMove);
         relaod = true;
     } else if (gm.move(afterMove)){
         relaod = true;
-        console.log('Go to after : '+afterMove);
+        if(solve_log) console.log('Go to after : '+afterMove);
     } else if(gm.move(MOVE_RIGHT)) {
         m = gm.grid.cellContent({ x: 0, y: 3 });
         if(!m) {
             gm.move(MOVE_LEFT);
-            console.log('Droite gauche');
+            if(solve_log) console.log('Droite gauche');
             nextMove = MOVE_DOWN;
         } else {
-            console.log('Droite');
+            if(solve_log) console.log('Droite');
             nextMove = MOVE_LEFT;
         }
         relaod = true;
     } else if(gm.move(MOVE_UP) || gm.move(MOVE_DOWN)) {
         nextMove = MOVE_LEFT;
         relaod = true;
-        console.log('Haut bas');
+        if(solve_log) console.log('Haut bas');
     }
 
     if(relaod) {
