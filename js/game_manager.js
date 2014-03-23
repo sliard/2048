@@ -10,28 +10,94 @@ var gm;
 
 function autoPlay()
 {
+    // a b c d
+    // e f g h
+    // i j k l
+    // m n o p
+
+    a = gm.grid.cellContent({ x: 0, y: 0 });
+    b = gm.grid.cellContent({ x: 1, y: 0 });
+    c = gm.grid.cellContent({ x: 2, y: 0 });
+    d = gm.grid.cellContent({ x: 3, y: 0 });
+    line0_full = a && b && c && d;
+
+    e = gm.grid.cellContent({ x: 0, y: 1 });
+    f = gm.grid.cellContent({ x: 1, y: 1 });
+    g = gm.grid.cellContent({ x: 2, y: 1 });
+    h = gm.grid.cellContent({ x: 3, y: 1 });
+    line1_full = e && f && g && h;
+
+    i = gm.grid.cellContent({ x: 0, y: 2 });
+    j = gm.grid.cellContent({ x: 1, y: 2 });
+    k = gm.grid.cellContent({ x: 2, y: 2 });
+    l = gm.grid.cellContent({ x: 3, y: 2 });
+    line2_full = i && j && k && l;
+
+    m = gm.grid.cellContent({ x: 0, y: 3 });
+    n = gm.grid.cellContent({ x: 1, y: 3 });
+    o = gm.grid.cellContent({ x: 2, y: 3 });
+    p = gm.grid.cellContent({ x: 3, y: 3 });
+    line3_full = m && n && o && p;
+
+// line 3
+    if(i && m && (i.value == m.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    } else if(m && j && n && (j.value == n.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    } else if(m && k && o && (k.value == o.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+// line 2
+    if(m && e && i && (e.value == i.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    } else if(m && i && e && f && j && (f.value == j.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+// line 3
+    if(m && i && a && e && (a.value == e.value)) {
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+
+    if(line3_full && !l && ((i && n && (i.value == n.value)) || (j && o && (j.value == o.value)) || (k && p && (k.value == p.value)))) {
+        gm.move(MOVE_RIGHT);
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+    if(line3_full && line2_full && !h && ((e && j && (e.value == j.value)) || (f && k && (f.value == k.value)) || (g && l && (g.value == l.value)))) {
+        gm.move(MOVE_RIGHT);
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+    if(line3_full && line2_full && line1_full && !d && ((a && f && (a.value == f.value)) || (b && g && (b.value == g.value)) || (c && h && (c.value == h.value)))) {
+        gm.move(MOVE_RIGHT);
+        gm.move(MOVE_DOWN);
+        gm.move(MOVE_LEFT);
+    }
+
+    // a b c d
+    // e f g h
+    // i j k l
+    // m n o p
+
+
     afterMove = (nextMove == MOVE_LEFT) ? MOVE_DOWN : MOVE_LEFT;
-    if(gm.move(nextMove)) {
+    if(gm.move(nextMove) || gm.move(nextMove)) {
         nextMove = afterMove;
         setTimeout(autoPlay,timer);
     } else if (gm.move(afterMove)){
         setTimeout(autoPlay,timer);
     } else if(gm.move(MOVE_RIGHT)) {
-
-        // a b c d
-        // e f g h
-        // i j k l
-        // m n o p
-
-        a = gm.grid.cellContent({ x: 0, y: 0 });
-        e = gm.grid.cellContent({ x: 0, y: 1 });
-        i = gm.grid.cellContent({ x: 0, y: 2 });
-        m = gm.grid.cellContent({ x: 0, y: 3 });
-
-        if(m || (!a && !e && !i)) {
-            gm.move(MOVE_DOWN);
-        }
-
         gm.move(MOVE_LEFT);
         nextMove = MOVE_DOWN;
         setTimeout(autoPlay,timer);
