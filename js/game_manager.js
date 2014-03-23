@@ -39,70 +39,144 @@ function autoPlay()
     p = gm.grid.cellContent({ x: 3, y: 3 });
     line3_full = m && n && o && p;
 
+    afterMove = (nextMove == MOVE_LEFT) ? MOVE_DOWN : MOVE_LEFT;
+    relaod = false;
+
+    if((m && n && (m.value == n.value)) || (n && o && (n.value == o.value)) || (o && p && (o.value == p.value))) {
+        gm.move(MOVE_LEFT);
+        relaod = true;
+        console.log('Left 3 Egal');
+    }
+
 // line 3
     if(i && m && (i.value == m.value)) {
         gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 3 - A');
     } else if(m && j && n && (j.value == n.value)) {
         gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 3 - B');
     } else if(m && k && o && (k.value == o.value)) {
         gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    }
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 3 - C');
+    } else if(m && l && p && (l.value == p.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 3 - D');
+    } else
 
 // line 2
     if(m && e && i && (e.value == i.value)) {
         gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    } else if(m && i && e && f && j && (f.value == j.value)) {
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 2 - A');
+    } else if(m && f && j && (f.value == j.value)) {
         gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    }
-
-// line 3
-    if(m && i && a && e && (a.value == e.value)) {
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 2 - B');
+    } else if(m && g && k && (g.value == k.value)) {
         gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 2 - C');
+    } else if(m && h && l && (h.value == l.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 2 - D');
+    } else
+
+// line 1
+
+    if(m  && a && e && (a.value == e.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 1 - A');
+    } else if(m && b && f && (b.value == f.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 1 - B');
+    } else if(m && c && g && (c.value == g.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 1 - C');
+    } else if(m && d && h && (d.value == h.value)) {
+        gm.move(MOVE_DOWN);
+        nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Line 1 - D');
+    } else if(line3_full && ((i && j && (i.value == j.value)) || (j && k && (j.value == k.value)) || (k && l && (k.value == l.value)))) {
         gm.move(MOVE_LEFT);
-    }
+        relaod = true;
+        console.log('Left 2 Egal');
+    } else if(line2_full && line3_full && ((e && f && (e.value == f.value)) || (f && g && (f.value == g.value)) || (g && h && (g.value == h.value)))) {
+        gm.move(MOVE_LEFT);
+        relaod = true;
+        console.log('Left 1 Egal');
+    } else if(line1_full && line2_full && line3_full && ((a && b && (a.value == b.value)) || (b && c && (b.value == c.value)) || (c && d && (c.value == d.value)))) {
+        gm.move(MOVE_LEFT);
+        relaod = true;
+        console.log('Left 0 Egal');
+    } else
 
 
-    if(line3_full && !l && ((i && n && (i.value == n.value)) || (j && o && (j.value == o.value)) || (k && p && (k.value == p.value)))) {
+    if(line3_full && i && j && k && !l && ((i.value == n.value) || (j.value == o.value) || (k.value == p.value))) {
         gm.move(MOVE_RIGHT);
-        gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    }
-
-    if(line3_full && line2_full && !h && ((e && j && (e.value == j.value)) || (f && k && (f.value == k.value)) || (g && l && (g.value == l.value)))) {
-        gm.move(MOVE_RIGHT);
-        gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    }
-
-    if(line3_full && line2_full && line1_full && !d && ((a && f && (a.value == f.value)) || (b && g && (b.value == g.value)) || (c && h && (c.value == h.value)))) {
-        gm.move(MOVE_RIGHT);
-        gm.move(MOVE_DOWN);
-        gm.move(MOVE_LEFT);
-    }
-
-    // a b c d
-    // e f g h
-    // i j k l
-    // m n o p
-
-
-    afterMove = (nextMove == MOVE_LEFT) ? MOVE_DOWN : MOVE_LEFT;
-    if(gm.move(nextMove) || gm.move(nextMove)) {
-        nextMove = afterMove;
-        setTimeout(autoPlay,timer);
-    } else if (gm.move(afterMove)){
-        setTimeout(autoPlay,timer);
-    } else if(gm.move(MOVE_RIGHT)) {
-        gm.move(MOVE_LEFT);
         nextMove = MOVE_DOWN;
-        setTimeout(autoPlay,timer);
+        relaod = true;
+        console.log('Egal D-B - line 2');
+    } else
+
+    if(line3_full && line2_full && e && f && g && !h && ((e.value == j.value) || (f.value == k.value) || (g.value == l.value))) {
+        gm.move(MOVE_RIGHT);
+        nextMove = MOVE_DOWN;
+        relaod = true;
+        console.log('Egal D-B - line 1');
+    } else
+
+    if(line3_full && line2_full && line1_full && a && b && c && !d && ((a.value == f.value) || (b.value == g.value) || (c.value == h.value))) {
+        gm.move(MOVE_RIGHT);
+        nextMove = MOVE_DOWN;
+        relaod = true;
+        console.log('Egal D-B - line 0');
+    } else
+
+    if(gm.move(nextMove)) {
+        nextMove = afterMove;
+        console.log('Go to : '+nextMove);
+        relaod = true;
+    } else if (gm.move(afterMove)){
+        relaod = true;
+        console.log('Go to after : '+afterMove);
+    } else if(gm.move(MOVE_RIGHT)) {
+        m = gm.grid.cellContent({ x: 0, y: 3 });
+        if(!m) {
+            gm.move(MOVE_LEFT);
+            console.log('Droite gauche');
+            nextMove = MOVE_DOWN;
+        } else {
+            console.log('Droite');
+            nextMove = MOVE_LEFT;
+        }
+        relaod = true;
     } else if(gm.move(MOVE_UP) || gm.move(MOVE_DOWN)) {
         nextMove = MOVE_LEFT;
+        relaod = true;
+        console.log('Haut bas');
+    }
+
+    if(relaod) {
         setTimeout(autoPlay,timer);
     }
 
@@ -119,6 +193,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
   this.startTiles   = 2;
 
 //  this.inputManager.on("move", this.move.bind(this));
+//  this.inputManager.on("move", autoPlay);
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
